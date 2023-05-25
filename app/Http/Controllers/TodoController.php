@@ -46,7 +46,7 @@ class TodoController extends Controller
     public function show(Todo $todo)
     {
  
-        return view('todo.edit')->with('todo', $todo);
+        //return view('todo.edit')->with('todo', $todo);
         
     }
 
@@ -65,13 +65,13 @@ class TodoController extends Controller
      */
     public function update(Request $request, Todo $todo)
     {
-        $todo = Todo::find(1);
-/*         $todo = Todo::update([
-            'title'=> $request->input('title'),
-            'description' => $request->input('description'),
-            'is_complete' => $request->boolean('is_complete')
-        ]); */
-        dd($todo);
+    
+        $todo->title = $request->input('title');
+        $todo->description = $request->input('description');
+        $todo->is_complete = $request->boolean('is_complete');
+        $todo->save();
+        return redirect('/todo');
+
     }
 
     /**
@@ -79,8 +79,9 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        //
-        //$todo = Todo::first($id);
-        dd($todo);
+ 
+        $todo->delete();
+        return redirect('/todo');
+    
     }
 }
